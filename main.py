@@ -13,7 +13,7 @@ import re
 import sys
 import docopt
 import subprocess
-
+import pprint
 
 def get_commit_hashes(directory):
     if directory[-1] != '/':
@@ -60,7 +60,7 @@ def get_files_and_change_commits(directory):
             if file_name not in files:
                 files[file_name] = commit_hash
     print ""
-    print files
+    pprint.pprint(files)
 
 
 def main():
