@@ -5,8 +5,10 @@ Usage:
   ./main.py <directory>
 
 Show info about files in a git repository and when they've changed
+
 """
 
+import os
 import subprocess
 import sys
 import docopt
@@ -21,12 +23,15 @@ def get_hash_info(hash, directory):
 
 
 def get_files_and_change_commits(directory):
-    pass
+    print directory
 
 
 def main():
     options = docopt.docopt(__doc__, version="foo")
-    get_files_and_change_commits(options["directory"])
+    git_checkout = options["<directory>"]
+    if not os.path.isdir(git_checkout):
+        raise RuntimeError("<directory> must exist")
+    get_files_and_change_commits(git_checkout)
 
 
 if __name__ == "__main__":
