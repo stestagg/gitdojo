@@ -16,6 +16,8 @@ import subprocess
 
 
 def get_commit_hashes(directory):
+    if directory[len(directory)-1:] != '/':
+        directory = directory + '/'
     pr = subprocess.Popen("/usr/bin/git log",
                           cwd=os.path.dirname(directory),
                           shell=True, stdout=subprocess.PIPE,
@@ -32,18 +34,7 @@ def get_commit_hashes(directory):
 
 
 def get_hash_info(hash, directory):
-    """
-    Get information for commit hash.
-
-    hash - Commit
-    directory - git repo dir
-
-    """
-    cmd = "cd %s && git ls-tree --name-only -r %s" % (directory, hash)
-    info = subprocess.check_output(cmd, shell=True)
-    info = info.split("\n")
-    info = [line for line in info if line != ""]
-    return info
+    pass
 
 
 def get_files_and_change_commits(directory):
