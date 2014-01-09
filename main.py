@@ -16,8 +16,8 @@ import subprocess
 
 
 def get_commit_hashes(directory):
-    if directory[len(directory)-1:] != '/':
-        directory = directory + '/'
+    if directory[-1] != '/':
+        directory = "{}/".format(directory)
     pr = subprocess.Popen("/usr/bin/git log",
                           cwd=os.path.dirname(directory),
                           shell=True, stdout=subprocess.PIPE,
