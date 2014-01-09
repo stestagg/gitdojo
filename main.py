@@ -51,9 +51,12 @@ def get_hash_info(commit_hash, directory):
 def get_files_and_change_commits(directory):
     files = {}
     counter = 0
-    for commit_hash in get_commit_hashes(directory):
+    commit_hashes = list(get_commit_hashes(directory))
+    leng = len(commit_hashes)
+    for commit_hash in commit_hashes:
         if counter % 100:
-            print ".",
+            perc = int((counter / float(leng)) * 100)
+            print perc,
             sys.stdout.flush()
         counter += 1
         for file_name in get_hash_info(commit_hash, directory):
