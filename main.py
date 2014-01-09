@@ -63,7 +63,7 @@ def get_files_and_change_commits(directory):
         commit_date = datetime.datetime.utcfromtimestamp(timestamp)
         if counter % 100:
             perc = int((counter / float(leng)) * 100)
-            print "\x1b[0G", perc, "%",
+            print "\x1b[0G", perc, "%", 
             sys.stdout.flush()
         counter += 1
         for file_name in get_hash_info(commit_hash, directory):
