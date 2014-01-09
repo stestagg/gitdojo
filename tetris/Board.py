@@ -9,6 +9,7 @@ class GameOver(BaseException):
 class Board(object):
     def __init__(self):
         self.rows = tuple(tuple('#' for j in xrange(10)) for j in xrange(20))
+        self.rows_ = self.rows
         self.current = None
         self.tick_no = 0
 
@@ -24,17 +25,18 @@ class Board(object):
             ))
             if act is not None:
                 act()
+                self.rows_ = self.current.rendered
         except BaseException as ex:
-            print ex
+            del ex
         else:
-            self.draw(self.current.rendered)
+            self.draw()
 
         if not self.tick_no % 3:
             if self.current is not None:
                 try:
                     self.current.down()
                 except piece.Collision:
-                    self.rows = self.current.rendered
+                    self.rows = self.rows_
                     self.current = None
             else:
                 self.current = choice(piece.TETROMINOES)(self)
@@ -43,9 +45,9 @@ class Board(object):
                 except piece.Collision as e:
                     raise GameOver(e)
 
-    @staticmethod
-    def draw(board):
-        print '\n'.join(''.join(row) for row in board)
+    def draw(self):
+        print '\n' * 80
+        print '\n'.join(''.join(row) for row in self.rows_)
 
 B = Board()
 from time import sleep

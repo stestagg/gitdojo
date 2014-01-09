@@ -20,7 +20,6 @@ class Piece(object):
     @property
     def rendered(self):
         if not self._rendered:
-            print '\n' * 80
             d = [[self.board.rows[y][x] for x in xrange(10)]
                  for y in xrange(20)]
             y, x = self.position
@@ -72,5 +71,6 @@ class TetraI(Piece):
 
 class TetraT(Piece):
     char = 'T'
+    shape = ((0, 0), (0, -1), (0, 1), (1, 0))
 
-TETROMINOES = (TetraI, TetraI)
+TETROMINOES = (TetraI, TetraT)
