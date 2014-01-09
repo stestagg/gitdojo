@@ -50,12 +50,13 @@ def get_hash_info(commit_hash, directory):
 
 def get_files_and_change_commits(directory):
     files = {}
+    counter = 0
     for commit_hash in get_commit_hashes(directory):
-        print ".",
-        sys.stdout.flush()
-        for file_name in get_hash_info(commit_hash, directory):
+        if counter % 100:
             print ".",
             sys.stdout.flush()
+        counter += 1
+        for file_name in get_hash_info(commit_hash, directory):
             if file_name not in files:
                 files[file_name] = commit_hash
     print ""
