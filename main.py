@@ -9,21 +9,26 @@ Show info about files in a git repository and when they've changed
 """
 
 import os
-import subprocess
+import re
 import sys
 import docopt
+import subprocess
 
 
 def get_commit_hashes(directory):
-    print directory
     pr = subprocess.Popen("/usr/bin/git log",
-                          cwd=os.path.dirname('./'),
+                          cwd=os.path.dirname(directory),
                           shell=True, stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE)
-    (out, error) = pr.communicate()
+    (git_log, error) = pr.communicate()
 
-    print "Error : " + str(error)
-    print "out : " + str(out)
+    git_hashes = []
+    log_lines = git_log.split('\n')
+    for line in log_lines:
+        if re.match('^commit', line):
+            git_hashes.append(line[7:])
+
+    return reversed(git_hashes)
 
 
 def get_hash_info(hash, directory):
@@ -37,7 +42,6 @@ def get_files_and_change_commits(directory):
             if file_name not in files:
                 files[file_name] = commit_hash
     print files
-
 
 
 def main():
