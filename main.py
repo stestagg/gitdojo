@@ -15,7 +15,15 @@ import docopt
 
 
 def get_commit_hashes(directory):
-    pass
+    print directory
+    pr = subprocess.Popen("/usr/bin/git log",
+                          cwd=os.path.dirname('./'),
+                          shell=True, stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE)
+    (out, error) = pr.communicate()
+
+    print "Error : " + str(error)
+    print "out : " + str(out)
 
 
 def get_hash_info(hash, directory):
@@ -23,16 +31,7 @@ def get_hash_info(hash, directory):
 
 
 def get_files_and_change_commits(directory):
-    print directory
-    pr = subprocess.Popen( "/usr/bin/git log",
-                      cwd = os.path.dirname( './' ),
-                      shell = True, stdout = subprocess.PIPE,
-                      stderr = subprocess.PIPE)
-    (out, error) = pr.communicate()
-
-    print "Error : " + str(error)
-    print "out : " + str(out)
-
+    pass
 
 
 def main():
@@ -44,4 +43,4 @@ def main():
 
 
 if __name__ == "__main__":
-  sys.exit(main())
+    sys.exit(main())
