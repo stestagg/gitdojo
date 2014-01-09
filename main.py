@@ -33,16 +33,32 @@ def get_commit_hashes(directory):
     return reversed(git_hashes)
 
 
-def get_hash_info(hash, directory):
-    pass
+def get_hash_info(commit_hash, directory):
+    """
+    Get information for commit hash.
+
+    hash - Commit
+    directory - git repo dir
+
+    """
+    cmd = "cd %s && git ls-tree --name-only -r %s" % (directory, commit_hash)
+    info = subprocess.check_output(cmd, shell=True)
+    info = info.split("\n")
+    info = [line for line in info if line != ""]
+    return info
 
 
 def get_files_and_change_commits(directory):
     files = {}
     for commit_hash in get_commit_hashes(directory):
+        print ".",
+        sys.stdout.flush()
         for file_name in get_hash_info(commit_hash, directory):
+            print ".",
+            sys.stdout.flush()
             if file_name not in files:
                 files[file_name] = commit_hash
+    print ""
     print files
 
 
