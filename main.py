@@ -31,7 +31,13 @@ def get_hash_info(hash, directory):
 
 
 def get_files_and_change_commits(directory):
-    pass
+    files = {}
+    for commit_hash in get_commit_hashes(directory):
+        for file_name in get_hash_info(commit_hash, directory):
+            if file_name not in files:
+                files[file_name] = commit_hash
+    print files
+
 
 
 def main():
