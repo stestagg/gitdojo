@@ -17,6 +17,8 @@ import subprocess
 import time
 import pprint
 
+
+#### GROUP 1
 def get_commit_hashes(directory):
     if directory[-1] != '/':
         directory = "{}/".format(directory)
@@ -39,6 +41,7 @@ def get_commit_hashes(directory):
     return reversed(git_hashes)
 
 
+#### GROUP 2
 def get_hash_info(commit_hash, directory):
     """
     Get information for commit hash.
@@ -53,7 +56,7 @@ def get_hash_info(commit_hash, directory):
     info = [line for line in info if line != ""]
     return info
 
-
+### Shared
 def get_files_and_change_commits(directory):
     files = {}
     counter = 0
@@ -78,7 +81,7 @@ def get_files_and_change_commits(directory):
     pprint.pprint(files, width=180)
     print "KABLAM"
 
-
+### GROUP 3
 def main():
     options = docopt.docopt(__doc__, version="foo")
     git_checkout = options["<directory>"]
